@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Markdown from 'react-remarkable';
 import './App.css';
 
 class App extends Component {
-  render() {
+  constructor (props) {
+    super(props);
+    this.state = {
+      mdtext: '**Markdown is awesome!**'
+    };
+    this.updateMarkdown = this.updateMarkdown.bind(this);
+  }
+
+  updateMarkdown (event) {
+    this.setState({ mdtext: event.target.value });
+  }
+
+  render () {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div class="container">
+          <div class="editor">
+            <textarea rows="10" cols="20" value={this.state.mdtext} onChange={this.updateMarkdown} />
+          </div>
+          <div class="output">
+            <Markdown source={this.state.mdtext} />
+          </div>
+        </div>
       </div>
     );
   }
